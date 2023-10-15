@@ -10,8 +10,9 @@
 // FUNCTIONS
 int ft_printf(const char *format, ...);
 void put_char(va_list args);
-char ft_checkformat(va_list args, const char *format);
 void put_str(va_list args);
 void	put_nbr(va_list args);
+void put_point(va_list args);
+void put_hexa(va_list args, const char *format);
 
 #endif

@@ -1,4 +1,5 @@
 #include "printf.h"
+
 char ft_checkformat(va_list args, const char *format)
 {
   // verifica se a posicao que estamos no format string é igal a um dos formats indicados se for chama a funcao para imprimir os numeros 
@@ -10,12 +11,12 @@ char ft_checkformat(va_list args, const char *format)
     put_str(args);
   if (*format == 'i')
     put_nbr(args);
-  /*if (*format == 'X')
-    put_hexa(args);
+  if (*format == 'X')
+    put_hexa(args, format);
   if (*format == 'x')
-    put_hexa(args);
+    put_hexa(args, format);
   if (*format == 'p')
-    put_point(args);*/
+    put_point(args);
   if (*format == '%')
     write(1, "%", 1);
 }
@@ -30,9 +31,11 @@ int ft_printf(const char *format, ...)
     {
       format++;
       ft_checkformat(args, format);
-  }
-    if (*format == '\n')
+    }
+    else if (*format == '\n')
       write (1, "\n", 1);
+    else
+      write(1, format, 1);
     format++;
   }
   //va_arg(args, char); // serve para utilizar os argumentos 
@@ -42,15 +45,24 @@ int ft_printf(const char *format, ...)
 
 int main (void)
 {
+  char *str = "this is a string test";
+  int value = 18;
+  int *ptr = &value;
   ft_printf("%s\n", "MY FUNCTION-------TEST-------");
-  ft_printf("%s\n", "this is a string test");
-  ft_printf("%c\n", 'b');
-  ft_printf("%i\n", -4356);
-  printf("%s\n", "MY FUNCTION-------TEST-------");
-  printf("%s\n", "this is a string test");
-  printf("%c\n", 'b');
-  printf("%i\n", -4356);
-  printf("%#X\n", 15);
-  printf("%#x\n", 15);
+  //ft_printf("write this :%s\n", str);
+  //ft_printf("%p\n", &ptr);
+  //ft_printf("%c\n", 'b');
+  //ft_printf("%i\n", value);
+  //ft_printf("%x\n", 30);
+  //ft_printf("%X\n", 15);
+  ft_printf("hello %s, today is %d, in hex %x, and this is a char: %c\n", "Braulio", 27, 27, 'c');
+  printf("%s\n", "ORIGINAL FUNCTION-------TEST-------");
+  //printf("write this :%s\n", str);
+  //printf("%p\n", &ptr);
+  //printf("%c\n", 'b');
+  //printf("%i\n", value);
+  //printf("%x\n", 30);
+  //printf("%X\n", 15);
+  printf("hello %s, today is %d, in hex %x, and this is a char: %c\n", "Braulio", 27, 27, 'c');
   return (0);
 }

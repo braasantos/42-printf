@@ -1,6 +1,6 @@
 #include "printf.h"
 
-static	void	ft_getnbr(int n)
+static	void	ft_getnbr(long n)
 {
 	if (n >= 10)
 	{
@@ -16,7 +16,7 @@ static	void	ft_getnbr(int n)
 
 void	put_nbr(va_list args)
 {
-  int nbr = va_arg(args, int);
+  long nbr = va_arg(args, int);
 
 	if (nbr == -2147483648)
 	{
