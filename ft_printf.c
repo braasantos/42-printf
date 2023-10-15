@@ -1,6 +1,6 @@
 #include "printf.h"
 
-char ft_checkformat(va_list args, const char *format)
+void ft_checkformat(va_list args, const char *format)
 {
   // verifica se a posicao que estamos no format string é igal a um dos formats indicados se for chama a funcao para imprimir os numeros 
   if (*format == 'c')
@@ -27,11 +27,14 @@ int ft_printf(const char *format, ...)
   va_start(args, format); // serve para iniciar o uso dos argumentos
   while (*format)
   {
+    
     if (*format == '%')
     {
       format++;
       ft_checkformat(args, format);
     }
+    /*if (*format == '#')
+      write(1, "0x", 2);*/
     else if (*format == '\n')
       write (1, "\n", 1);
     else
@@ -40,29 +43,5 @@ int ft_printf(const char *format, ...)
   }
   //va_arg(args, char); // serve para utilizar os argumentos 
   va_end(args); // para terminar de usar os argumentos
-  return (0);
-}
-
-int main (void)
-{
-  char *str = "this is a string test";
-  int value = 18;
-  int *ptr = &value;
-  ft_printf("%s\n", "MY FUNCTION-------TEST-------");
-  //ft_printf("write this :%s\n", str);
-  //ft_printf("%p\n", &ptr);
-  //ft_printf("%c\n", 'b');
-  //ft_printf("%i\n", value);
-  //ft_printf("%x\n", 30);
-  //ft_printf("%X\n", 15);
-  ft_printf("hello %s, today is %d, in hex %x, and this is a char: %c\n", "Braulio", 27, 27, 'c');
-  printf("%s\n", "ORIGINAL FUNCTION-------TEST-------");
-  //printf("write this :%s\n", str);
-  //printf("%p\n", &ptr);
-  //printf("%c\n", 'b');
-  //printf("%i\n", value);
-  //printf("%x\n", 30);
-  //printf("%X\n", 15);
-  printf("hello %s, today is %d, in hex %x, and this is a char: %c\n", "Braulio", 27, 27, 'c');
   return (0);
 }

@@ -1,6 +1,6 @@
 ####
-NAME = printf.a
-SRCS = put_char.c put_str.c put_hexa.c put_point.c put_nbr.c ft_printf.c \
+NAME = ft_printf.a
+SRCS = ft_printf.c put_char.c put_str.c put_hexa.c put_adress.c put_nbr.c 
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 CC = cc
@@ -20,7 +20,7 @@ clean:
 	$(RM) $(OBJS) 
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) a.out
 
 re: fclean all
 
