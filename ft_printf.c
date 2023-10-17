@@ -1,47 +1,56 @@
-#include "printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bjorge-m <bjorge-m@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/16 12:20:23 by bjorge-m          #+#    #+#             */
+/*   Updated: 2023/10/16 17:20:11 by bjorge-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void ft_checkformat(va_list args, const char *format)
+#include "ft_printf.h"
+
+void	ft_checkformat(va_list args, const char *format, int *count)
 {
-  // verifica se a posicao que estamos no format string é igal a um dos formats indicados se for chama a funcao para imprimir os numeros 
-  if (*format == 'c')
-    put_char(args);
-  if (*format == 'd')
-    put_nbr(args);
-  if (*format == 's')
-    put_str(args);
-  if (*format == 'i')
-    put_nbr(args);
-  if (*format == 'X')
-    put_hexa(args, format);
-  if (*format == 'x')
-    put_hexa(args, format);
-  if (*format == 'p')
-    put_point(args);
-  if (*format == '%')
-    write(1, "%", 1);
+	if (*format == 'c')
+		ft_put_char(va_arg(args, int), count);
+	if (*format == 'd' || *format == 'i')
+		ft_put_nbr(va_arg(args, int), count);
+	if (*format == 's')
+		ft_put_str(va_arg(args, char *), count);
+	if (*format == 'u')
+		ft_putunsig(va_arg(args, unsigned int), count);
+	if (*format == 'X' || *format == 'x')
+		ft_puthexa(va_arg(args, int), format, count);
+	if (*format == 'p')
+		ft_putadress(va_arg(args, size_t), count);
+	if (*format == '%')
+		ft_put_char('%', count);
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-  va_list args; // va_list é um tipo de variavel e args é o nome 
-  va_start(args, format); // serve para iniciar o uso dos argumentos
-  while (*format)
-  {
-    
-    if (*format == '%')
-    {
-      format++;
-      ft_checkformat(args, format);
-    }
-    /*if (*format == '#')
-      write(1, "0x", 2);*/
-    else if (*format == '\n')
-      write (1, "\n", 1);
-    else
-      write(1, format, 1);
-    format++;
-  }
-  //va_arg(args, char); // serve para utilizar os argumentos 
-  va_end(args); // para terminar de usar os argumentos
-  return (0);
+	va_list	args;
+	int		count;
+
+	count = 0;
+	va_start (args, format);
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++;
+			ft_checkformat(args, format, &count);
+		}
+		else
+		{
+			write(1, format, 1);
+			count += 1;
+		}
+		format++;
+	}
+	va_end(args);
+	return (count);
 }
